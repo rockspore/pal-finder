@@ -7,7 +7,7 @@ class EventList extends StatefulWidget {
 }
 
 class _EventListState extends State<EventList> {
-  final list = <String>['Shanghai', 'Laoluan', 'Age', 'Ge', 'Luwei'];
+  final list = <String>['California', 'LaoLiuMang', 'Yang', 'Zhenghua'];
 
   @override
   Widget build(BuildContext context) {
