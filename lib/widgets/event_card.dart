@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
@@ -10,9 +11,14 @@ class EventCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // TODO: Pop out event details
+        developer.log('Card Tapped', name: 'my.app.eventSimulator');
       },
       child: Card(
-        child: Text(name),
+        color: Theme.of(context).cardColor,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(name),
+        ),
       ),
     );
   }
