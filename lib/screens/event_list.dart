@@ -30,11 +30,14 @@ class _EventListState extends State<EventList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _eventList.length,
-      itemBuilder: (context, index) {
-        return EventCard(name: _eventList[index].toString());
-      },
+    return DecoratedBox(
+      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      child: ListView.builder(
+        itemCount: _eventList.length,
+        itemBuilder: (context, index) {
+          return EventCard(name: _eventList[index].toString());
+        },
+      ),
     );
   }
 }

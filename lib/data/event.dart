@@ -22,8 +22,9 @@ class EventData {
   final LatLng location;
   final DateTime time;
 
+  @override
   String toString() {
-    return host + ': ' + placeName + ' @ ' + time.toString();
+    return host + ': ' + placeName + ' @ ' + time.toString() + ' at location' + location.toString();
   }
 
 }
