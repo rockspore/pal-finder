@@ -1,4 +1,3 @@
-import 'dart:developer' as Developer;
 import 'package:flutter/cupertino.dart';
 import 'package:pal_finder/screens/place_search.dart';
 import 'package:pal_finder/screens/event_list.dart';

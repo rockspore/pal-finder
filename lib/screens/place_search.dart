@@ -1,3 +1,4 @@
+import 'dart:developer' as Developer;
 import 'package:flutter/cupertino.dart';
 import 'package:pal_finder/screens/event_list.dart';
 import 'package:pal_finder/widgets/search_bar.dart';
@@ -14,7 +15,7 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
   @override
   void initState() {
     super.initState();
-    controller.addListener(_onTextChanged);
+//    controller.addListener(_onTextChanged);
   }
 
   @override
@@ -23,8 +24,14 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
     super.dispose();
   }
 
-  void _onTextChanged() {
-//    setState(() => {});
+//  void _onTextChanged() {
+//    // setState(() => {});
+//  }
+
+  void _onTextSubmitted(String text) {
+    // TODO: implement the request to get nearby places
+    Developer.log('Input: ' + text, name: "pal_finder.emulator");
+    // setState(() => {});
   }
 
   Widget _createSearchBox() {
@@ -33,6 +40,7 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
       child: SearchBar(
         controller: controller,
         focusNode: focusNode,
+        onTextSubmitted: _onTextSubmitted,
       ),
     );
   }
