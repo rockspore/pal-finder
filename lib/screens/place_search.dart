@@ -1,4 +1,6 @@
 import 'dart:developer' as Developer;
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:pal_finder/screens/event_list.dart';
 import 'package:pal_finder/widgets/search_bar.dart';
@@ -9,13 +11,14 @@ class PlaceSearchScreen extends StatefulWidget {
 }
 
 class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
-  final controller = TextEditingController();
-  final focusNode = FocusNode();
+  final TextEditingController controller = TextEditingController();
+  final FocusNode focusNode = FocusNode();
+  final String _placeSearchURL = 'http://10.0.2.2:8000/apis/places/textsearch/';
+  final String token = 'Token cbfae62f222ea02664cd84f7964b64998c2fabde';
 
   @override
   void initState() {
     super.initState();
-//    controller.addListener(_onTextChanged);
   }
 
   @override
@@ -24,14 +27,21 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
     super.dispose();
   }
 
-//  void _onTextChanged() {
-//    // setState(() => {});
-//  }
-
-  void _onTextSubmitted(String text) {
-    // TODO: implement the request to get nearby places
-    Developer.log('Input: ' + text, name: "pal_finder.emulator");
-    // setState(() => {});
+  void _onTextSubmitted(String text) async {
+    Developer.log('Input: $text', name: 'pal_finder.emulator');
+    HttpClient httpClient = HttpClient();
+    HttpClientRequest request = await httpClient.getUrl(Uri.parse(_placeSearchURL + '?query=$text'));
+    request.headers.add(HttpHeaders.authorizationHeader, token);
+    request.headers.add(HttpHeaders.contentTypeHeader, 'application/json');
+    HttpClientResponse response = await request.close();
+    String reply = await response.transform(Utf8Decoder()).join();
+    var map = jsonDecode(reply);
+    for (Map result in map['results']) {
+      print(result['name']);
+      print(result['geometry']);
+      print(result['icon']);
+    }
+    httpClient.close();
   }
 
   Widget _createSearchBox() {
