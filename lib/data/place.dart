@@ -2,14 +2,14 @@ import 'dart:core';
 import 'package:meta/meta.dart';
 import 'package:latlong/latlong.dart';
 
-class EventData {
+class PlaceData {
 
-  EventData({
+  PlaceData({
     @required this.placeName,
     @required this.location,
   });
 
-  EventData.fromMap(Map<String, dynamic> map)
+  PlaceData.fromMap(Map<String, dynamic> map)
       : placeName = map['place_name'],
         location = LatLng(map['location']['coordinates'][1], map['location']['coordinates'][0]);
 
