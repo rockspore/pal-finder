@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pal_finder/screens/event_list.dart';
 import 'package:pal_finder/widgets/form_field.dart';
+import 'package:pal_finder/screens/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,17 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: Column(
-          children: <Widget>[
-            MyStatefulWidget(),
-            Expanded(
-              child: EventList(),
-            )
-          ],
-        )
-      ),
+      home: HomeScreen(),
     );
   }
 }

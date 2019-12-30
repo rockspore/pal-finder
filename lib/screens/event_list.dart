@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pal_finder/widgets/event_card.dart';
 import 'package:pal_finder/data/event.dart';
 
@@ -31,7 +31,7 @@ class _EventListState extends State<EventList> {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+      decoration: BoxDecoration(color: Color.fromRGBO(128, 128, 128, 1)),
       child: ListView.builder(
         itemCount: _eventList.length,
         itemBuilder: (context, index) {
