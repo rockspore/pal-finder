@@ -20,12 +20,17 @@ class EventCard extends StatelessWidget {
       },
       child: Card(
         color: Theme.of(context).cardColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        clipBehavior: Clip.antiAlias,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Column(
               children: <Widget>[
-                Icon(Icons.account_circle, size: 50),
-                Text(hostName),
+                _buildProfilePhoto(),
+                _buildProfile(context),
               ]
             ),
             Flexible(
@@ -44,6 +49,31 @@ class EventCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildProfile(BuildContext context) => Container(
+    padding: EdgeInsets.all(10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          hostName,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Text('Tonight'),
+        Text('5:00 pm'),
+      ],
+    ),
+  );
+
+  Widget _buildProfilePhoto() {
+    return Container(
+      width: 120,
+      height: 120,
+      color: Colors.grey,
+      alignment: Alignment.center,
+      child: Icon(Icons.account_circle, size: 80),
     );
   }
 }
