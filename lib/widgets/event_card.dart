@@ -30,16 +30,14 @@ class EventCard extends StatelessWidget {
             Column(
               children: <Widget>[
                 _buildProfilePhoto(),
-                _buildProfile(context),
+                _buildProfile(),
               ]
             ),
             Flexible(
               child: Column(
                 children: <Widget>[
-                  ListTile(
-                    title: Text('The restaurant image should be inserted here.'),
-                  ),
-                  Divider(),
+                  _buildPlaceImage(),
+                  // Divider(),
                   ListTile(
                     title: Text(placeName),
                   ),
@@ -52,7 +50,19 @@ class EventCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProfile(BuildContext context) => Container(
+  Widget _buildPlaceImage() => Container(
+    height: 120,
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        fit: BoxFit.cover,
+        image: NetworkImage(
+          'https://australiabusinessnews.com.au/wp-content/uploads/2016/11/shutterstock_192086159-1170x780.jpg',
+        ),
+      ),
+    ),
+  );
+
+  Widget _buildProfile() => Container(
     padding: EdgeInsets.all(10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
