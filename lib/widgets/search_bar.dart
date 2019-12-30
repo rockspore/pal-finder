@@ -14,7 +14,7 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Color.fromRGBO(128, 128, 128, 1.0),
+        color: Color.fromRGBO(75, 0, 130, 1.0),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
@@ -27,7 +27,7 @@ class SearchBar extends StatelessWidget {
             ExcludeSemantics(
               child: Icon(
                 CupertinoIcons.search,
-                color: Color.fromRGBO(128, 0, 0, 1.0),
+                color: Color.fromRGBO(128, 128, 128, 1.0),
               ),
             ),
             Expanded(
@@ -44,7 +44,7 @@ class SearchBar extends StatelessWidget {
               child: Icon(
                 CupertinoIcons.clear_thick_circled,
                 semanticLabel: 'Clear search terms',
-                color: Color.fromRGBO(128, 0, 0, 1.0)
+                color: Color.fromRGBO(128, 128, 128, 1.0)
               ),
             ),
           ],

@@ -24,7 +24,8 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
   }
 
   void _onTextChanged() {
-//    setState(() => {});
+    // TODO: implement the request to get nearby places
+    // setState(() => {});
   }
 
   Widget _createSearchBox() {
