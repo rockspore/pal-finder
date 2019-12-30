@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pal_finder/screens/event_list.dart';
 import 'package:pal_finder/screens/home.dart';
 
 void main() => runApp(MyApp());
