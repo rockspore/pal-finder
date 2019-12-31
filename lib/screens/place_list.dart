@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:pal_finder/widgets/event_card.dart';
+import 'package:pal_finder/widgets/place_card.dart';
 import 'package:pal_finder/data/place.dart';
 
 class PlaceList extends StatefulWidget {
@@ -34,10 +34,9 @@ class _PlaceListState extends State<PlaceList> {
       child: ListView.builder(
         itemCount: _placeList.length,
         itemBuilder: (context, index) {
-          final Place = _placeList[index];
+          final placeData = _placeList[index];
           return PlaceCard(
-            hostName: Place.hostName,
-            placeName: Place.placeName,
+            placeName: placeData.placeName,
           );
         },
       ),

@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 
 class PlaceCard extends StatelessWidget {
   PlaceCard({
-    @required this.hostName,
     @required this.placeName,
     Key key,
     }): super(key: key);
 
-  final String hostName;
   final String placeName;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: Pop out event details
         developer.log('Card Tapped', name: 'my.app.eventSimulator');
       },
       child: Card(
@@ -57,10 +54,6 @@ class PlaceCard extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          hostName,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
         Text('Tonight'),
         Text('5:00 pm'),
       ],
