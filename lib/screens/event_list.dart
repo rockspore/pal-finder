@@ -37,8 +37,7 @@ class _EventListState extends State<EventList> {
         itemBuilder: (context, index) {
           final event = _eventList[index];
           return EventCard(
-            hostName: event.hostName,
-            placeName: event.placeName,
+            event: event,
           );
         },
       ),

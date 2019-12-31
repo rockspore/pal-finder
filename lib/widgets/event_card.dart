@@ -1,15 +1,14 @@
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
+import 'package:pal_finder/data/event.dart';
 
 class EventCard extends StatelessWidget {
   EventCard({
-    @required this.hostName,
-    @required this.placeName,
+    @required this.event,
     Key key,
     }): super(key: key);
 
-  final String hostName;
-  final String placeName;
+  final EventData event;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,7 @@ class EventCard extends StatelessWidget {
                   _buildPlaceImage(),
                   // Divider(),
                   ListTile(
-                    title: Text(placeName),
+                    title: Text(event.placeName),
                   ),
                 ],
               ),
@@ -68,7 +67,7 @@ class EventCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          hostName,
+          event.hostName,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text('Tonight'),
