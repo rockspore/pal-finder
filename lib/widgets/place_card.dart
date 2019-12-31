@@ -1,13 +1,14 @@
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
+import 'package:pal_finder/data/place.dart';
 
 class PlaceCard extends StatelessWidget {
   PlaceCard({
-    @required this.placeName,
+    @required this.placeData,
     Key key,
     }): super(key: key);
 
-  final String placeName;
+  final PlaceData placeData;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,6 @@ class PlaceCard extends StatelessWidget {
             Column(
               children: <Widget>[
                 _buildProfilePhoto(),
-                _buildProfile(context),
               ]
             ),
             Flexible(
@@ -38,7 +38,7 @@ class PlaceCard extends StatelessWidget {
                   ),
                   Divider(),
                   ListTile(
-                    title: Text(placeName),
+                    title: Text(placeData.placeName),
                   ),
                 ],
               ),
@@ -49,24 +49,13 @@ class PlaceCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProfile(BuildContext context) => Container(
-    padding: EdgeInsets.all(10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text('Tonight'),
-        Text('5:00 pm'),
-      ],
-    ),
-  );
-
   Widget _buildProfilePhoto() {
     return Container(
       width: 120,
       height: 120,
       color: Colors.grey,
       alignment: Alignment.center,
-      child: Icon(Icons.account_circle, size: 80),
+      child: Image.network(placeData.placeIconURL),
     );
   }
 }
