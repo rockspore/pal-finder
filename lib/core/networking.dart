@@ -47,4 +47,28 @@ class Networking {
       (Route<dynamic> route) => false,
     );
   }
+  Map<String, String> _injectAuthToken(Map<String, String> headers) {
+    headers['authorizationHeader'] = 'Token $_authToken';
+    return headers;
+  }
+  
+  get(url, {Map<String, String> headers: const{}}) => http.get(
+      url,
+      headers: _injectAuthToken(headers),
+    );
+
+  post(url, {Map<String, String> headers, body, Encoding encoding}) => http.post(
+    url,
+    headers: _injectAuthToken(headers),
+    body: body,
+    encoding: encoding,
+  );
+
+  put(url, {Map<String, String> headers, body, Encoding encoding}) => http.put(
+    url,
+    headers: _injectAuthToken(headers),
+    body: body,
+    encoding: encoding,
+  );
+
 }
