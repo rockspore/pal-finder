@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pal_finder/core/networking.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -53,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       SystemChannels.textInput.invokeMethod('TextInput.hide');
                       // TODO: Implement login and get token method
-                      // requestLoginAPI(context, _userNameController.text, _passwordController.text);
+                      Networking().loginUser(_usernameController.text, _passwordController.text);
                     },
                     child: Text("LOGIN",
                         style: TextStyle(color: Colors.white,
