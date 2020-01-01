@@ -4,6 +4,8 @@ import 'package:pal_finder/screens/home.dart';
 import 'package:pal_finder/screens/login.dart';
 import 'package:pal_finder/screens/splash.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: _title,
+      navigatorKey: navigatorKey,
       routes: {
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),

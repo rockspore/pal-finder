@@ -11,7 +11,10 @@ class LoginScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         if(Navigator.canPop(context)) {
-          Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            '/home',
+            (Route<dynamic> route) => false,
+          );
         } else {
           Navigator.of(context).pushReplacementNamed('/home');
         }

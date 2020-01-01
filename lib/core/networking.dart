@@ -1,43 +1,50 @@
-// import 'dart:convert';
-// import 'dart:io';
+import 'dart:convert';
+import 'dart:io';
 
 // import 'package:flutter/cupertino.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:pal_finder/data/event.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:pal_finder/main.dart';
 
-// class EventFetcher {
-//   EventFetcher({
-//     @required this.lat,
-//     @required this.lng,
-//     @required this.dist,
-//   })
-//       : nextUrl='http://10.0.2.2:8000/apis/events/nearby/?lng=${lng.toStringAsFixed(6)}&lat=${lat.toStringAsFixed(6)}&dist=${dist.toStringAsFixed(3)}';
+class Networking {
+  Networking._internal(this._authToken);
 
-//   final double lat;
-//   final double lng;
-//   final double dist;
-//   String nextUrl;
+  factory Networking() {
+    if (_singleton == null) {
+      _promptLogin();
+    }
+    return _singleton;
+  }
 
-//   Future<List<EventData>> fetchNextPage() async {
-//     final eventList = <EventData>[];
-//     if (nextUrl != null) {
-//       final response = await http.get(
-//         nextUrl,
-//         headers: {
-//           HttpHeaders.authorizationHeader: 'Token b0998f43d3cb06e03f9dce4dd4e7816bc12eaa74'
-//         },
-//       );
-//       if (response.statusCode == 200) {
-//         final data = jsonDecode(response.body) as Map<String, dynamic>;
-//         final list = data['results'] as List;
-//         list.forEach((eventMap) {
-//           eventList.add(EventData.fromMap(eventMap));
-//         });
-//         nextUrl = data['next'];
-//       } else {
-//         throw Exception('Fail to load events.');
-//       }
-//     }
-//     return eventList;
-//   }
-// }
+  static Networking _singleton = null;
+  final String _authToken;
+
+  static loginUser(String username, String password) async {
+    String loginUrl;
+    if (Platform.isIOS) {
+      loginUrl = 'http://localhost:8000/api-token/';
+    } else if (Platform.isAndroid) {
+      loginUrl = 'http://10.0.2.2:8000/api-token/';
+    }
+    final response = await http.post(
+      loginUrl,
+      body: {
+        'username': username,
+        'password': password,
+      },
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      _singleton = Networking._internal(data['token']);
+    } else {
+      throw Exception('Failed login: ${response.statusCode}.');
+    }
+  }
+
+  static _promptLogin() {
+    navigatorKey.currentState.pushNamedAndRemoveUntil(
+      '/login',
+      (Route<dynamic> route) => false,
+    );
+  }
+}
