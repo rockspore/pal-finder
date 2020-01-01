@@ -6,6 +6,7 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
   final String _welcomeString = 'Login:';
 
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
