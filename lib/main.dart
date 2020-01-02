@@ -4,7 +4,6 @@ import 'package:pal_finder/screens/home.dart';
 import 'package:pal_finder/screens/login.dart';
 import 'package:pal_finder/screens/place_search.dart';
 import 'package:pal_finder/screens/splash.dart';
-import 'package:pal_finder/screens/new_event.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
         '/place': (context) => PlaceSearchScreen(),
-        '/new_event': (context) => NewEventScreen(),
       },
       home: PlaceSearchScreen(),
     );

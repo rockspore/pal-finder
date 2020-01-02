@@ -12,11 +12,11 @@ class PlaceSearchScreen extends StatefulWidget {
 }
 
 class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
-  final TextEditingController controller = TextEditingController();
-  final FocusNode focusNode = FocusNode();
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
   final String _placeSearchURL = 'http://10.0.2.2:8000/apis/places/textsearch/';
-  final String token = 'Token cbfae62f222ea02664cd84f7964b64998c2fabde';
-  final HttpClient httpClient = HttpClient();
+  final String _token = 'Token cbfae62f222ea02664cd84f7964b64998c2fabde';
+  final HttpClient _httpClient = HttpClient();
   final _placeList = <PlaceData>[];
 
   @override
@@ -27,9 +27,9 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
 
   @override
   void dispose() {
-    focusNode.dispose();
+    _focusNode.dispose();
     super.dispose();
-    httpClient.close();
+    _httpClient.close();
   }
 
   void _getDummyData() {
@@ -43,8 +43,8 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
 
   void _onTextSubmitted(String text) async {
     Developer.log('Input: $text', name: 'pal_finder.emulator');
-    HttpClientRequest request = await httpClient.getUrl(Uri.parse(_placeSearchURL + '?query=$text'));
-    request.headers.add(HttpHeaders.authorizationHeader, token);
+    HttpClientRequest request = await _httpClient.getUrl(Uri.parse(_placeSearchURL + '?query=$text'));
+    request.headers.add(HttpHeaders.authorizationHeader, _token);
     request.headers.add(HttpHeaders.contentTypeHeader, 'application/json');
     HttpClientResponse response = await request.close();
     String reply = await response.transform(Utf8Decoder()).join();
@@ -62,8 +62,8 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: SearchBar(
-        controller: controller,
-        focusNode: focusNode,
+        controller: _controller,
+        focusNode: _focusNode,
         onTextSubmitted: _onTextSubmitted,
       ),
     );
