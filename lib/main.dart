@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
     return CupertinoApp(
       title: _title,
       // navigatorKey: navigatorKey,
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
-        '/': (context) => SplashScreen(),
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
+        '/': (context) => LoginScreen(),
       },
       // home: SplashScreen(),
     );
