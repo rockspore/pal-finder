@@ -6,17 +6,18 @@ class SplashScreen extends StatelessWidget {
   final int splashDuration = 2;
 
   _startTimer(BuildContext context) async {
-    return Timer(
-        Duration(seconds: splashDuration),
-            () {
-          SystemChannels.textInput.invokeMethod('TextInput.hide');
-          Navigator.of(context).pushReplacementNamed('/login');
-        }
+    Future.delayed(
+      Duration(seconds: splashDuration),
+      () {
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+        Navigator.pushReplacementNamed(context, '/login');
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Building splashscreen in $context');
     _startTimer(context);
     return Scaffold(
       body: Container(

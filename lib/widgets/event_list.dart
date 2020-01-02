@@ -18,6 +18,7 @@ class _EventListState extends State<EventList> {
 
   @override
   Widget build(BuildContext context) {
+    print('Building event list in $context');
     return DecoratedBox(
       decoration: BoxDecoration(color: Color.fromRGBO(128, 128, 128, 1)),
       child: ListView.builder(

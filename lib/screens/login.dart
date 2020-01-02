@@ -9,6 +9,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Building login page... $context');
     return WillPopScope(
       onWillPop: () {
         if(Navigator.canPop(context)) {
