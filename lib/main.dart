@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
       title: _title,
       navigatorKey: navigatorKey,
       routes: {
-        '/home': (context) => HomeScreen(),
+        '/home': (context) => PlaceSearchScreen(),
         '/login': (context) => LoginScreen(),
         '/place': (context) => PlaceSearchScreen(),
       },
-      home: PlaceSearchScreen(),
+      home: SplashScreen(),
     );
   }
 }
