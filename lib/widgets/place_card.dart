@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:pal_finder/data/place.dart';
+import 'package:pal_finder/screens/new_event.dart';
 
 class PlaceCard extends StatelessWidget {
   PlaceCard({
@@ -14,7 +15,13 @@ class PlaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        developer.log('Card Tapped', name: 'my.app.eventSimulator');
+        developer.log('Place Card Tapped', name: 'my.app.eventSimulator');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NewEventScreen(placeData: placeData),
+          ),
+        );
       },
       child: Card(
         color: Theme.of(context).cardColor,
@@ -34,11 +41,11 @@ class PlaceCard extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    title: Text('The restaurant image should be inserted here.'),
+                    title: Text(placeData.placeName),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text(placeData.placeName),
+                    title: Text(placeData.address),
                   ),
                 ],
               ),

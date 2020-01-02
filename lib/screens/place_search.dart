@@ -1,7 +1,7 @@
 import 'dart:developer' as Developer;
 import 'dart:io';
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pal_finder/data/place.dart';
 import 'package:pal_finder/widgets/place_list.dart';
 import 'package:pal_finder/widgets/search_bar.dart';
@@ -71,25 +71,23 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabView(
-      builder: (context) {
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(1, 1, 1, 0.0),
+    return Scaffold(
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(1, 1, 1, 0.0),
+        ),
+        child: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              _createSearchBox(),
+              Expanded(
+                child: PlaceList(_placeList),
+              ),
+            ],
           ),
-          child: SafeArea(
-            bottom: false,
-            child: Column(
-              children: [
-                _createSearchBox(),
-                Expanded(
-                  child: PlaceList(_placeList),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
