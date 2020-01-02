@@ -9,9 +9,9 @@ import 'package:http/http.dart' as http;
 class Networking {
   Networking._internal() {
     if (Platform.isIOS) {
-      _host = 'http://localhost:8000/';
+      _host = 'http://localhost:8000';
     } else if (Platform.isAndroid) {
-      _host = 'http://10.0.2.2:8000/';
+      _host = 'http://10.0.2.2:8000';
     }
   }
 
@@ -31,22 +31,26 @@ class Networking {
   loginUser(String username, String password) async {
     String loginUrl;
     if (Platform.isIOS) {
-      loginUrl = '${host}api-token/';
+      loginUrl = '$host/api-token/';
     } else if (Platform.isAndroid) {
-      loginUrl = '${host}api-token/';
+      loginUrl = '$host/api-token/';
     }
-    final response = await http.post(
-      loginUrl,
-      body: {
-        'username': username,
-        'password': password,
-      },
-    );
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      _authToken = data['token'];
-    } else {
-      throw Exception('Failed login: ${response.statusCode}.');
+    try {
+      final response = await http.post(
+        loginUrl,
+        body: {
+          'username': username,
+          'password': password,
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        _authToken = data['token'];
+      } else {
+        throw('Failed to login: ${response.statusCode}.');
+      }
+    } catch(err) {
+      throw('Failed to connect: $err');
     }
   }
 

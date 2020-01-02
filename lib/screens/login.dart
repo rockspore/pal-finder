@@ -12,12 +12,13 @@ class LoginScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         if(Navigator.canPop(context)) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
+          Navigator.pushNamedAndRemoveUntil(
+            context,
             '/home',
             (Route<dynamic> route) => false,
           );
         } else {
-          Navigator.of(context).pushReplacementNamed('/home');
+          Navigator.pushReplacementNamed(context, '/home');
         }
       },
       child: Scaffold(
@@ -54,7 +55,15 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       SystemChannels.textInput.invokeMethod('TextInput.hide');
                       // TODO: Implement login and get token method
-                      Networking().loginUser(_usernameController.text, _passwordController.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => _LoadingScreen(
+                            _usernameController.text,
+                            _passwordController.text
+                          ),
+                        ),
+                      );
                     },
                     child: Text("LOGIN",
                         style: TextStyle(color: Colors.white,
@@ -72,5 +81,46 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _LoadingScreen extends StatelessWidget {
+  _LoadingScreen(this._username, this._password);
+
+  final String _username;
+  final String _password;
+
+  @override
+  Widget build(BuildContext context) {
+    _loginUser(context);
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(color: Colors.black),
+        child: Column(
+          children: <Widget>[
+            Expanded(child:
+              Container(decoration: BoxDecoration(color: Colors.black),
+                alignment: FractionalOffset(0.5, 0.3),
+                child: Text("Loading...", style: TextStyle(fontSize: 40.0, color: Colors.white),),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _loginUser(BuildContext context) async {
+    try {
+      await Networking().loginUser(_username, _password);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        (Route<dynamic> route) => false,
+      );
+    } catch(err) {
+      print('Error caught: $err');
+      Navigator.pop(context);
+    }
   }
 }

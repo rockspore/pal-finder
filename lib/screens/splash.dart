@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class SplashScreen extends StatelessWidget {
   final int splashDuration = 2;
 
-  startTimer(BuildContext context) async {
+  _startTimer(BuildContext context) async {
     return Timer(
         Duration(seconds: splashDuration),
             () {
@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    startTimer(context);
+    _startTimer(context);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(color: Colors.black),
@@ -34,8 +34,8 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
           ],
-        )
-      )
+        ),
+      ),
     );
   }
 }
