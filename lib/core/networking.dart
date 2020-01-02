@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
@@ -62,11 +63,14 @@ class Networking {
   // }
 
   Map<String, String> _injectAuthToken(Map<String, String> headers) {
-    headers['authorizationHeader'] = 'Token $_authToken';
+    if (headers == null) {
+      headers = Map<String, String>();
+    }
+    headers['Authorization'] = 'Token $_authToken';
     return headers;
   }
   
-  get(url, {Map<String, String> headers: const{}}) => http.get(
+  get(url, {Map<String, String> headers}) => http.get(
       url,
       headers: _injectAuthToken(headers),
     );
@@ -84,5 +88,18 @@ class Networking {
     body: body,
     encoding: encoding,
   );
+
+  void handleResponseCode(BuildContext context, int code) {
+    switch (code) {
+      case 200:
+        break;
+      case 401:
+        print('401 Unothorized.');
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
+        break;
+      default:
+        throw Exception('HTTP error code: $code.');
+    }
+  }
 
 }
