@@ -48,9 +48,9 @@ class _EventListState extends State<EventList> {
         int listSize = _eventList.length;
         if (!snapshot.hasData || snapshot.data) {
           // print('snapshot.hasData: ${snapshot.hasData}');
-          if (snapshot.hasData) {
-            // print('snapshot.data: ${snapshot.data}');
-          }
+          // if (snapshot.hasData) {
+          //   print('snapshot.data: ${snapshot.data}');
+          // }
           ++listSize;
         }
         return DecoratedBox(

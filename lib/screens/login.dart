@@ -1,6 +1,10 @@
+// import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pal_finder/core/networking.dart';
+
+final _storage = FlutterSecureStorage();
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
@@ -59,7 +63,6 @@ class LoginScreen extends StatelessWidget {
                   RaisedButton(
                     onPressed: () {
                       SystemChannels.textInput.invokeMethod('TextInput.hide');
-                      // TODO: Implement login and get token method
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -152,20 +155,26 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  _startTimer(BuildContext context) async {
-    Future.delayed(
-      Duration(seconds: widget._splashDuration),
-      () {
-        SystemChannels.textInput.invokeMethod('TextInput.hide');
-        Navigator.pushReplacementNamed(context, '/login');
-      },
-    );
+  _initApp(BuildContext context) async {
+    Future tokenGetter = _storage.read(key: 'auth_token');
+    Future timer = Future.delayed(Duration(seconds: widget._splashDuration), () => true);
+    final waitRes = await Future.wait([
+      tokenGetter,
+      timer,
+    ]);
+    if (waitRes[0] == null) {
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      Navigator.pushReplacementNamed(context, '/login');
+    } else {
+      Networking().authToken = waitRes[0];
+      Navigator.pushReplacementNamed(context, '/home');
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    _startTimer(context);
+    _initApp(context);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
@@ -47,6 +48,11 @@ class Networking {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         _authToken = data['token'];
+        try {
+          await FlutterSecureStorage().write(key: 'auth_token', value: _authToken);
+        } catch (err) {
+          print('Error trying to save auth_token.');
+        }
       } else {
         throw('Failed to login: ${response.statusCode}.');
       }
@@ -55,12 +61,7 @@ class Networking {
     }
   }
 
-  // static _promptLogin() {
-  //   navigatorKey.currentState.pushNamedAndRemoveUntil(
-  //     '/login',
-  //     (Route<dynamic> route) => false,
-  //   );
-  // }
+  set authToken(String token) => _authToken = token;
 
   Map<String, String> _injectAuthToken(Map<String, String> headers) {
     if (headers == null) {
