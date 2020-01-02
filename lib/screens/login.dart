@@ -6,24 +6,11 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final String _welcomeString = 'Login:';
-  final Future<int> _timer = Future<int>.delayed(
-    Duration(seconds: 2),
-    () => 0,
-  );
 
   @override
   Widget build(BuildContext context) {
-    print('Building login page... $context');
-    return FutureBuilder<int>(
-      future: _timer,
-      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-        if (snapshot.hasData) {
-          return _loginScreen(context);
-        } else {
-          return _splashScreen(context);
-        }
-      },
-    );
+    // print('Building login page... $context');
+    return _loginScreen(context);
   }
           
   Widget _loginScreen(BuildContext context) {
@@ -100,28 +87,6 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-          
-  Widget _splashScreen(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(color: Colors.black),
-        child: Column(
-          children: <Widget>[
-            Expanded(child:
-              Container(decoration: BoxDecoration(color: Colors.black),
-                alignment: FractionalOffset(0.5, 0.3),
-                child: Text("TestApp", style: TextStyle(fontSize: 40.0, color: Colors.white),),
-              ),
-            ),
-            Container(margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
-              child: Text("© Copyright Statement 2018", style: TextStyle(fontSize: 16.0, color: Colors.white,),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
 }
 
@@ -171,46 +136,59 @@ class _LoadingScreenState extends State<_LoadingScreen> {
         (Route<dynamic> route) => false,
       );
     } catch(err) {
-      print('Error caught: $err');
+      // print('Error caught: $err');
       Navigator.pop(context);
     }
   }
 }
 
-// class _SplashScreen extends StatelessWidget {
-//   // final int splashDuration = 2;
+class SplashScreen extends StatefulWidget {
+  final int _splashDuration = 2;
 
-//   // _startTimer(BuildContext context) async {
-//   //   Future.delayed(
-//   //     Duration(seconds: splashDuration),
-//   //     () {
-//   //       SystemChannels.textInput.invokeMethod('TextInput.hide');
-//   //       Navigator.pushReplacementNamed(context, '/login');
-//   //     },
-//   //   );
-//   // }
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
 
-//   @override
-//   Widget build(BuildContext context) {
-//     print('Building splashscreen in $context');
-//     return Scaffold(
-//       body: Container(
-//         decoration: BoxDecoration(color: Colors.black),
-//         child: Column(
-//           children: <Widget>[
-//             Expanded(child:
-//               Container(decoration: BoxDecoration(color: Colors.black),
-//                 alignment: FractionalOffset(0.5, 0.3),
-//                 child: Text("TestApp", style: TextStyle(fontSize: 40.0, color: Colors.white),),
-//               ),
-//             ),
-//             Container(margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
-//               child: Text("© Copyright Statement 2018", style: TextStyle(fontSize: 16.0, color: Colors.white,),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+
+  _startTimer(BuildContext context) async {
+    Future.delayed(
+      Duration(seconds: widget._splashDuration),
+      () {
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+        Navigator.pushReplacementNamed(context, '/login');
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // print('Building splashscreen in $context');
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(color: Colors.black),
+        child: Column(
+          children: <Widget>[
+            Expanded(child:
+              Container(decoration: BoxDecoration(color: Colors.black),
+                alignment: FractionalOffset(0.5, 0.3),
+                child: Text("TestApp", style: TextStyle(fontSize: 40.0, color: Colors.white),),
+              ),
+            ),
+            Container(margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
+              child: Text("© Copyright Statement 2018", style: TextStyle(fontSize: 16.0, color: Colors.white,),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

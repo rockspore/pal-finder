@@ -12,15 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Building MyApp');
+    // print('Building MyApp');
     return CupertinoApp(
       title: _title,
       // navigatorKey: navigatorKey,
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
-        '/': (context) => LoginScreen(),
+        '/': (context) => SplashScreen(),
       },
       // home: SplashScreen(),
     );
