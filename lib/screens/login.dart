@@ -92,15 +92,7 @@ class _LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Networking().loginUser(_username, _password).then(
-      (_) => Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/home',
-        (Route<dynamic> route) => false,
-      ),
-    ).catchError(
-      (err) => Navigator.pop(context),
-    );
+    _loginUser(context);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(color: Colors.black),
@@ -116,5 +108,19 @@ class _LoadingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _loginUser(BuildContext context) async {
+    try {
+      await Networking().loginUser(_username, _password);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        (Route<dynamic> route) => false,
+      );
+    } catch(err) {
+      print('Error caught: $err');
+      Navigator.pop(context);
+    }
   }
 }

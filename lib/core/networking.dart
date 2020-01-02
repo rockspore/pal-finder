@@ -47,7 +47,7 @@ class Networking {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         _authToken = data['token'];
       } else {
-        throw('Failed login: ${response.statusCode}.');
+        throw('Failed to login: ${response.statusCode}.');
       }
     } catch(err) {
       throw('Failed to connect: $err');
