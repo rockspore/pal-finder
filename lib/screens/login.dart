@@ -125,15 +125,26 @@ class LoginScreen extends StatelessWidget {
 
 }
 
-class _LoadingScreen extends StatelessWidget {
+class _LoadingScreen extends StatefulWidget {
   _LoadingScreen(this._username, this._password);
 
   final String _username;
   final String _password;
 
   @override
-  Widget build(BuildContext context) {
+  _LoadingScreenState createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<_LoadingScreen> {
+  
+  @override
+  void initState() {
+    super.initState();
     _loginUser(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(color: Colors.black),
@@ -153,7 +164,7 @@ class _LoadingScreen extends StatelessWidget {
 
   void _loginUser(BuildContext context) async {
     try {
-      await Networking().loginUser(_username, _password);
+      await Networking().loginUser(widget._username, widget._password);
       Navigator.pushNamedAndRemoveUntil(
         context,
         '/home',
