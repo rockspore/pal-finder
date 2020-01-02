@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Building MyApp in $context');
     return CupertinoApp(
       title: _title,
       home: HomeScreen(),

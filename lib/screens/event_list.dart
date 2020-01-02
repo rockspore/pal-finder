@@ -89,7 +89,7 @@ class EventFetcher {
       final response = await http.get(
         nextUrl,
         headers: {
-          HttpHeaders.authorizationHeader: 'Token fc27c2274f456cf0e7bd00663035a8c94ada0025'
+          HttpHeaders.authorizationHeader: 'Token b0998f43d3cb06e03f9dce4dd4e7816bc12eaa74'
         },
       );
       if (response.statusCode == 200) {
