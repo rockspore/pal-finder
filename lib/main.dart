@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pal_finder/screens/home.dart';
 import 'package:pal_finder/screens/login.dart';
+import 'package:pal_finder/screens/place_search.dart';
 
 // final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -18,11 +19,11 @@ class MyApp extends StatelessWidget {
       // navigatorKey: navigatorKey,
       initialRoute: '/',
       routes: {
-        '/home': (context) => HomeScreen(),
-        '/login': (context) => LoginScreen(),
         '/': (context) => SplashScreen(),
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => HomeScreen(),
+        '/place': (context) => PlaceSearchScreen(),
       },
-      // home: SplashScreen(),
     );
   }
 }

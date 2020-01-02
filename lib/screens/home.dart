@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pal_finder/widgets/event_list.dart';
 import 'package:pal_finder/screens/place_search.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ]),
       tabBuilder: (context, index) {
-        return EventList();
+        return PlaceSearchScreen();
       }
     );
   }
