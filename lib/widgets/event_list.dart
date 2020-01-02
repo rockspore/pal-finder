@@ -23,9 +23,11 @@ class _EventListState extends State<EventList> {
       child: ListView.builder(
         itemCount: _eventList.length + 1,
         itemBuilder: (context, index) {
+          print('called list builder inside $context with index $index');
           if (index >= _eventList.length) {
             _eventFetcher.fetchNextPage(context).then((List<EventData> newList) {
               setState(() {
+                print('setState()');
                 _eventList.addAll(newList);
               });
             });
