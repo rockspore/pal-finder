@@ -15,7 +15,7 @@ class PlaceSearchScreen extends StatefulWidget {
 class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final String _placeSearchURL = 'http://10.0.2.2:8000/apis/places/textsearch/';
+  final String _placeSearchURL = '${Networking().host}/apis/places/textsearch/';
   final Networking _networking = Networking();
   final _placeList = <PlaceData>[];
 

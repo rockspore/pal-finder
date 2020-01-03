@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pal_finder/data/event.dart';
 
 class EventCard extends StatelessWidget {
   EventCard(this._eventData, {Key key}): super(key: key);
 
   final EventData _eventData;
+  final DateFormat _dateFormat = DateFormat.yMd();
+  final DateFormat _timeFormat = DateFormat.jm();
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +68,8 @@ class EventCard extends StatelessWidget {
           _eventData.hostName,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        Text('Tonight'),
-        Text('5:00 pm'),
+        Text(_dateFormat.format(_eventData.time)),
+        Text(_timeFormat.format(_eventData.time)),
       ],
     ),
   );
