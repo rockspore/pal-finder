@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pal_finder/data/place.dart';
 import 'package:pal_finder/widgets/place_list.dart';
 import 'package:pal_finder/widgets/search_bar.dart';
+import 'package:pal_finder/core/networking.dart';
 
 class PlaceSearchScreen extends StatefulWidget {
   @override
@@ -15,8 +16,7 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final String _placeSearchURL = 'http://10.0.2.2:8000/apis/places/textsearch/';
-  final String _token = 'Token cbfae62f222ea02664cd84f7964b64998c2fabde';
-  final HttpClient _httpClient = HttpClient();
+  final Networking _networking = Networking();
   final _placeList = <PlaceData>[];
 
   @override
@@ -29,7 +29,6 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
   void dispose() {
     _focusNode.dispose();
     super.dispose();
-    _httpClient.close();
   }
 
   void _getDummyData() {
@@ -43,19 +42,20 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
 
   void _onTextSubmitted(String text) async {
     Developer.log('Input: $text', name: 'pal_finder.emulator');
-    HttpClientRequest request = await _httpClient.getUrl(Uri.parse(_placeSearchURL + '?query=$text'));
-    request.headers.add(HttpHeaders.authorizationHeader, _token);
-    request.headers.add(HttpHeaders.contentTypeHeader, 'application/json');
-    HttpClientResponse response = await request.close();
-    String reply = await response.transform(Utf8Decoder()).join();
-    final jsonData = jsonDecode(reply)['results'] as List;
-    _placeList.clear();
-    jsonData.forEach((result) {
-      _placeList.add(PlaceData.fromMap(result as Map));
-    });
-    setState(() {
-      Developer.log('Place Search Tab state reset.', name: 'pal_finder.emulator');
-    });
+    // try {
+      final response = await _networking.get(Uri.parse(_placeSearchURL + '?query=' + text));
+      final jsonData = jsonDecode(response.body)['results'];
+      print(response.body);
+      _placeList.clear();
+      jsonData.forEach((result) {
+        _placeList.add(PlaceData.fromMap(result));
+      });
+      setState(() {
+        Developer.log('Place Search Tab state reset.', name: 'pal_finder.emulator');
+      });
+    // } catch (err) {
+    //   print(err);
+    // }
   }
 
   Widget _createSearchBox() {

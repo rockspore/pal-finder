@@ -1,13 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pal_finder/data/place.dart';
+import 'package:pal_finder/core/networking.dart';
 
 class NewEventScreen extends StatelessWidget {
   final PlaceData placeData;
+  final Networking _networking = Networking();
 
   NewEventScreen({@required this.placeData});
 
-  void _createNewEvent() {
-
+  void _createNewEvent() async {
+    final String url = '${_networking.host}/apis/events/';
+    try {
+      print(placeData.placeId);
+      final response = await _networking.post(
+        url,
+        body: {
+          'place_id': placeData.placeId,
+          'time': DateTime.now().toIso8601String(),
+        },
+      );
+      print(response.statusCode());
+    } catch (err) {
+      print(err);
+    }
   }
 
   @override

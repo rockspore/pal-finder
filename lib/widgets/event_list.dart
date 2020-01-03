@@ -12,7 +12,7 @@ class EventList extends StatefulWidget {
 
 class _EventListState extends State<EventList> {
   final _eventList = <EventData>[];
-  final _eventFetcher = EventFetcher(-33.870481, 151.195697, 0.5);
+  final _eventFetcher = EventFetcher(31.0252201, 121.4337784, 0.5);
   Future<bool> _future;
 
   @override
