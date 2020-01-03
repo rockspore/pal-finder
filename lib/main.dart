@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:pal_finder/screens/home.dart';
 import 'package:pal_finder/screens/login.dart';
 import 'package:pal_finder/screens/place_search.dart';

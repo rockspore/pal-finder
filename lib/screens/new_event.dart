@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pal_finder/data/place.dart';
-// import 'package:pal_finder/core/networking.dart';
 
 class NewEventScreen extends StatelessWidget {
-  // final TextEditingController _usernameController = TextEditingController();
-  // final TextEditingController _passwordController = TextEditingController();
   final PlaceData placeData;
 
   NewEventScreen({@required this.placeData});
+
+  void _createNewEvent() {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,7 @@ class NewEventScreen extends StatelessWidget {
         } else {
           Navigator.of(context).pushReplacementNamed('/home');
         }
+        return;
       },
       child: Scaffold(
         body: Center(
@@ -33,14 +34,6 @@ class NewEventScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // SizedBox(height: 45.0),
-                  // TextField(
-                  //   // controller: _usernameController,
-                  //   decoration: InputDecoration(
-                  //     hintText: 'Username',
-                  //   ),
-                  //   style: TextStyle(fontSize: 18.0, color: Colors.grey, fontWeight: FontWeight.bold, ),
-                  // ),
                   Text(
                     placeData.placeName,
                     style: TextStyle(
@@ -64,10 +57,7 @@ class NewEventScreen extends StatelessWidget {
                     height: 35.0,
                   ),
                   RaisedButton(
-                    onPressed: () {
-                      SystemChannels.textInput.invokeMethod('TextInput.hide');
-                      // TODO: Implement login and get token method
-                    },
+                    onPressed: _createNewEvent,
                     child: Text("Create",
                         style: TextStyle(color: Colors.white,
                             fontSize: 22.0)
