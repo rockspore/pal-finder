@@ -2,15 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// import 'package:pal_finder/main.dart';
 
 class Networking {
   Networking._internal() {
-    if (Platform.isIOS) {
+    // TODO: I specified 'NGI77B dev-keys' as it's the operating system version on my Smartisan Phone.
+    if (Platform.isIOS || Platform.operatingSystemVersion == 'NGI77B dev-keys') {
       _host = 'http://localhost:8000';
     } else if (Platform.isAndroid) {
       _host = 'http://10.0.2.2:8000';
@@ -31,12 +28,7 @@ class Networking {
   String get host => _host;
 
   loginUser(String username, String password) async {
-    String loginUrl;
-    if (Platform.isIOS) {
-      loginUrl = '$host/api-token/';
-    } else if (Platform.isAndroid) {
-      loginUrl = '$host/api-token/';
-    }
+    final loginUrl = '$host/api-token/';
     try {
       final response = await http.post(
         loginUrl,

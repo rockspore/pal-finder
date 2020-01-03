@@ -54,7 +54,7 @@ class _EventListState extends State<EventList> {
           ++listSize;
         }
         return DecoratedBox(
-          decoration: BoxDecoration(color: Color.fromRGBO(128, 128, 128, 1)),
+          decoration: BoxDecoration(color: Colors.white),
           child: ListView.builder(
             itemCount: listSize,
             itemBuilder: (context, index) {
@@ -70,9 +70,7 @@ class _EventListState extends State<EventList> {
                 );
               }
               final event = _eventList[index];
-              return EventCard(
-                event: event,
-              );
+              return EventCard(event);
             },
           ),
         );

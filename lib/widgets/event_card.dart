@@ -3,19 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:pal_finder/data/event.dart';
 
 class EventCard extends StatelessWidget {
-  EventCard({
-    @required this.event,
-    Key key,
-    }): super(key: key);
+  EventCard(this._eventData, {Key key}): super(key: key);
 
-  final EventData event;
+  final EventData _eventData;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: Pop out event details
-        developer.log('Card Tapped', name: 'my.app.eventSimulator');
+        Navigator.pushNamed(context, '/event_detail', arguments: _eventData);
       },
       child: Card(
         color: Theme.of(context).cardColor,
@@ -38,7 +34,7 @@ class EventCard extends StatelessWidget {
                   _buildPlaceImage(),
                   // Divider(),
                   ListTile(
-                    title: Text(event.placeName),
+                    title: Text(_eventData.placeName),
                   ),
                 ],
               ),
@@ -67,7 +63,7 @@ class EventCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          event.hostName,
+          _eventData.hostName,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text('Tonight'),
