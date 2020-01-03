@@ -1,43 +1,98 @@
-// import 'dart:convert';
-// import 'dart:io';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
-// import 'package:flutter/cupertino.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:pal_finder/data/event.dart';
+class Networking {
+  Networking._internal() {
+    // TODO: I specified 'NGI77B dev-keys' as it's the operating system version on my Smartisan Phone.
+    if (Platform.isIOS || Platform.operatingSystemVersion == 'NGI77B dev-keys') {
+      _host = 'http://localhost:8000';
+    } else if (Platform.isAndroid) {
+      _host = 'http://10.0.2.2:8000';
+    }
+  }
 
-// class EventFetcher {
-//   EventFetcher({
-//     @required this.lat,
-//     @required this.lng,
-//     @required this.dist,
-//   })
-//       : nextUrl='http://10.0.2.2:8000/apis/events/nearby/?lng=${lng.toStringAsFixed(6)}&lat=${lat.toStringAsFixed(6)}&dist=${dist.toStringAsFixed(3)}';
+  factory Networking() {
+    if (_singleton == null) {
+      _singleton = Networking._internal();
+    }
+    return _singleton;
+  }
 
-//   final double lat;
-//   final double lng;
-//   final double dist;
-//   String nextUrl;
+  static Networking _singleton;
+  String _authToken;
+  String _host;
 
-//   Future<List<EventData>> fetchNextPage() async {
-//     final eventList = <EventData>[];
-//     if (nextUrl != null) {
-//       final response = await http.get(
-//         nextUrl,
-//         headers: {
-//           HttpHeaders.authorizationHeader: 'Token b0998f43d3cb06e03f9dce4dd4e7816bc12eaa74'
-//         },
-//       );
-//       if (response.statusCode == 200) {
-//         final data = jsonDecode(response.body) as Map<String, dynamic>;
-//         final list = data['results'] as List;
-//         list.forEach((eventMap) {
-//           eventList.add(EventData.fromMap(eventMap));
-//         });
-//         nextUrl = data['next'];
-//       } else {
-//         throw Exception('Fail to load events.');
-//       }
-//     }
-//     return eventList;
-//   }
-// }
+  String get host => _host;
+
+  loginUser(String username, String password) async {
+    final loginUrl = '$host/api-token/';
+    try {
+      final response = await http.post(
+        loginUrl,
+        body: {
+          'username': username,
+          'password': password,
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        _authToken = data['token'];
+        try {
+          await FlutterSecureStorage().write(key: 'auth_token', value: _authToken);
+        } catch (err) {
+          print('Error trying to save auth_token.');
+        }
+      } else {
+        throw('Failed to login: ${response.statusCode}.');
+      }
+    } catch(err) {
+      throw('Failed to connect: $err');
+    }
+  }
+
+  set authToken(String token) => _authToken = token;
+
+  Map<String, String> _injectAuthToken(Map<String, String> headers) {
+    if (headers == null) {
+      headers = Map<String, String>();
+    }
+    headers['Authorization'] = 'Token $_authToken';
+    return headers;
+  }
+  
+  get(url, {Map<String, String> headers}) => http.get(
+      url,
+      headers: _injectAuthToken(headers),
+    );
+
+  post(url, {Map<String, String> headers, body, Encoding encoding}) => http.post(
+    url,
+    headers: _injectAuthToken(headers),
+    body: body,
+    encoding: encoding,
+  );
+
+  put(url, {Map<String, String> headers, body, Encoding encoding}) => http.put(
+    url,
+    headers: _injectAuthToken(headers),
+    body: body,
+    encoding: encoding,
+  );
+
+  void handleResponseCode(BuildContext context, int code) {
+    switch (code) {
+      case 200:
+        break;
+      case 401:
+        print('401 Unothorized.');
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
+        break;
+      default:
+        throw Exception('HTTP error code: $code.');
+    }
+  }
+
+}
