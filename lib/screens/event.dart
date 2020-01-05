@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pal_finder/core/networking.dart';
 import 'package:pal_finder/data/event.dart';
 
 class EventScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class EventScreen extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                  'https://australiabusinessnews.com.au/wp-content/uploads/2016/11/shutterstock_192086159-1170x780.jpg',
+                  GooglePlacesApi().photoUrl(eventData.placeData.photoRef),
                 ),
               ),
             ),
