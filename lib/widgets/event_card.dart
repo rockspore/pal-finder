@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pal_finder/core/networking.dart';
@@ -17,7 +19,8 @@ class EventCard extends StatelessWidget {
         Navigator.pushNamed(context, '/event_detail', arguments: _eventData);
       },
       child: Card(
-        color: Theme.of(context).cardColor,
+        elevation: 10,
+        color: Colors.brown[50],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -66,7 +69,7 @@ class EventCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          _eventData.hostName,
+          _eventData.hostData.firstName + ' ' + _eventData.hostData.lastName,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(_dateFormat.format(_eventData.time)),
@@ -79,9 +82,29 @@ class EventCard extends StatelessWidget {
     return Container(
       width: 120,
       height: 120,
-      color: Colors.grey,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(
+            GooglePlacesApi().photoUrl(_eventData.placeData.photoRef),
+          ),
+        ),
+      ),
       alignment: Alignment.center,
-      child: Icon(Icons.account_circle, size: 80),
+      child: ClipRRect( // make sure we apply clip it properly
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            alignment: Alignment.center,
+            color: Colors.grey.withOpacity(0.1),
+            child: CircleAvatar(
+              radius: 40,
+              backgroundImage: NetworkImage(_eventData.hostData.profilePhotoUrl),
+            ),
+          ),
+        ),
+      ),
+                            
     );
   }
 }
