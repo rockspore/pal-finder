@@ -8,7 +8,9 @@ import 'package:http/http.dart' as http;
 class Networking {
   Networking._internal() {
     // TODO: I specified 'NGI77B dev-keys' as it's the operating system version on my Smartisan Phone.
-    if (Platform.isIOS || Platform.operatingSystemVersion == 'NGI77B dev-keys') {
+    if (Platform.operatingSystemVersion == 'NGI77B dev-keys') {
+      _host = 'http://192.168.0.109:8000';
+    } else if (Platform.isIOS) {
       _host = 'http://localhost:8000';
     } else if (Platform.isAndroid) {
       _host = 'http://10.0.2.2:8000';

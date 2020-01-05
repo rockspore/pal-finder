@@ -40,7 +40,7 @@ class _EventListState extends State<EventList> {
 
   @override
   Widget build(BuildContext context) {
-    print('Building event list in $context');
+    // print('Building event list in $context');
     return FutureBuilder<bool>(
       future: _future,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -94,6 +94,7 @@ class EventFetcher {
     if (_nextUrl != null) {
       // print('using Networking to get');
       final response = await _networking.get(_nextUrl);
+      // print('response code is ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;

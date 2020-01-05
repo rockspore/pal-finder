@@ -38,3 +38,6 @@ lib/generated_plugin_registrant.dart
 
 # Config
 .env
+
+# key.properties
+**/key.properties
