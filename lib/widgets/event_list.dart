@@ -5,6 +5,7 @@ import 'package:pal_finder/widgets/event_card.dart';
 import 'package:pal_finder/data/event.dart';
 import 'package:pal_finder/data/place.dart';
 import 'package:pal_finder/core/networking.dart';
+import 'package:geolocator/geolocator.dart';
 
 class EventList extends StatefulWidget {
   @override
@@ -13,13 +14,19 @@ class EventList extends StatefulWidget {
 
 class _EventListState extends State<EventList> {
   final _eventList = <EventData>[];
-  final _eventFetcher = EventFetcher(31.0252201, 121.4337784, 0.5);
+  EventFetcher _eventFetcher;
   Future<bool> _future;
 
   @override
   void initState() {
     super.initState();
-    _loadFuture();
+    Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+          _eventFetcher = EventFetcher(position.latitude, position.longitude, 10);
+          print(position.latitude);
+          print(position.longitude);
+          _loadFuture();
+        });
   }
 
   void _loadFuture() {

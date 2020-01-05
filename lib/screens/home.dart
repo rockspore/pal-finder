@@ -7,6 +7,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.list),
+          onPressed: () {
+            // TODO: Drawer action
+          },
+        ),
         toolbarOpacity: 0.5,
       ),
       body: EventList(),
