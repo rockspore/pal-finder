@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pal_finder/core/networking.dart';
 import 'package:pal_finder/data/event.dart';
 
 class EventCard extends StatelessWidget {
@@ -53,7 +54,7 @@ class EventCard extends StatelessWidget {
       image: DecorationImage(
         fit: BoxFit.cover,
         image: NetworkImage(
-          'https://australiabusinessnews.com.au/wp-content/uploads/2016/11/shutterstock_192086159-1170x780.jpg',
+          GooglePlacesApi().photoUrl(_eventData.placeData.photoRef),
         ),
       ),
     ),

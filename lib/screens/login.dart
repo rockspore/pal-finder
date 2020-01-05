@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pal_finder/core/networking.dart';
 
-final _storage = FlutterSecureStorage();
-
 class LoginScreen extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -158,6 +156,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _initApp(BuildContext context) async {
     Future tokenGetter = _storage.read(key: 'auth_token');
     Future timer = Future.delayed(Duration(seconds: widget._splashDuration), () => true);
+    GooglePlacesApi();
     final waitRes = await Future.wait([
       tokenGetter,
       timer,
@@ -170,6 +169,8 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacementNamed(context, '/home');
     }
   }
+
+  final _storage = FlutterSecureStorage();
 
   @override
   void initState() {
@@ -188,11 +189,11 @@ class _SplashScreenState extends State<SplashScreen> {
             Expanded(child:
               Container(decoration: BoxDecoration(color: Colors.black),
                 alignment: FractionalOffset(0.5, 0.3),
-                child: Text("TestApp", style: TextStyle(fontSize: 40.0, color: Colors.white),),
+                child: Text("Invite", style: TextStyle(fontSize: 40.0, color: Colors.white),),
               ),
             ),
             Container(margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 30.0),
-              child: Text("© Copyright Statement 2018", style: TextStyle(fontSize: 16.0, color: Colors.white,),
+              child: Text("© Copyright Huge Corp 2020", style: TextStyle(fontSize: 16.0, color: Colors.white,),
               ),
             ),
           ],

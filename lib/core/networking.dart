@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -93,6 +94,59 @@ class Networking {
       default:
         throw Exception('HTTP error code: $code.');
     }
+  }
+
+}
+
+class GooglePlacesApi {
+  GooglePlacesApi._internal() {
+    _host = 'maps.googleapis.com';
+    _apiKey = DotEnv().env['PLACES_API_KEY'];
+  }
+
+  factory GooglePlacesApi() {
+    if (_singleton == null) {
+      _singleton = GooglePlacesApi._internal();
+    }
+    return _singleton;
+  }
+
+  static GooglePlacesApi _singleton;
+  String _apiKey;
+  String _host;
+
+  String photoUrl(String photoReference, {int maxWidth=1200, int maxHeight}) {
+    final Map<String, String> params = {
+      'maxwidth': maxWidth.toString(),
+      'photoreference': photoReference,
+      'key': _apiKey,
+    };
+    if (maxHeight != null) {
+      params['maxheight'] = maxHeight.toString();
+    }
+    return Uri.https(
+      _host,
+      '/maps/api/place/photo',
+      params,
+    ).toString();
+  }
+
+  Future<Map> placeDetails(String placeId) async {
+    final response = await http.get(
+      Uri.https(
+        _host,
+        '/maps/api/place/details/json',
+        {
+          'place_id': placeId,
+          'key': _apiKey,
+        },
+      ),
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Error getting place details: ${response.statusCode}');
+    }
+    final data = jsonDecode(response.body) as Map;
+    return data['result'];
   }
 
 }

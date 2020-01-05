@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pal_finder/widgets/event_card.dart';
 import 'package:pal_finder/data/event.dart';
+import 'package:pal_finder/data/place.dart';
 import 'package:pal_finder/core/networking.dart';
 
 class EventList extends StatefulWidget {
@@ -39,7 +40,7 @@ class _EventListState extends State<EventList> {
 
   @override
   Widget build(BuildContext context) {
-    // print('Building event list in $context');
+    print('Building event list in $context');
     return FutureBuilder<bool>(
       future: _future,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -93,12 +94,19 @@ class EventFetcher {
     if (_nextUrl != null) {
       // print('using Networking to get');
       final response = await _networking.get(_nextUrl);
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         final list = data['results'] as List;
+        final detailsFutures = <Future>[];
+        // TODO: clean this mess up. May need to change the server data model to include photoreference
         list.forEach((eventMap) {
-          eventList.add(EventData.fromMap(eventMap));
+          detailsFutures.add(GooglePlacesApi().placeDetails(eventMap['place_id']));
         });
+        final detailsList = await Future.wait(detailsFutures);
+        for (int i = 0; i < list.length; i++) {
+          eventList.add(EventData.fromMap(list[i], PlaceData.fromMap(detailsList[i])));
+        }
         _nextUrl = data['next'];
       } else {
         _networking.handleResponseCode(context, response.statusCode);

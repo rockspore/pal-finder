@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:meta/meta.dart';
 import 'package:latlong/latlong.dart';
+import 'package:pal_finder/data/place.dart';
 
 class EventData {
 
@@ -9,9 +10,10 @@ class EventData {
     @required this.placeName,
     @required this.location,
     @required this.time,
+    @required this.placeData,
   });
 
-  EventData.fromMap(Map<String, dynamic> map)
+  EventData.fromMap(Map<String, dynamic> map, this.placeData)
       : hostName = map['host']['username'],
         placeName = map['place_name'],
         location = LatLng(map['location']['coordinates'][1], map['location']['coordinates'][0]),
@@ -21,6 +23,7 @@ class EventData {
   final String placeName;
   final LatLng location;
   final DateTime time;
+  final PlaceData placeData;
 
   @override
   String toString() {

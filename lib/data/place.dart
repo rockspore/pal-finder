@@ -10,6 +10,7 @@ class PlaceData {
     @required this.location,
     @required this.placeIconURL,
     @required this.address,
+    @required this.photoRef,
   });
 
   PlaceData.fromMap(Map<String, dynamic> map)
@@ -17,13 +18,15 @@ class PlaceData {
         location = LatLng(map['geometry']['location']['lat'], map['geometry']['location']['lng']),
         placeIconURL = map['icon'],
         address = map['formatted_address'],
-        placeId = map['place_id'];
+        placeId = map['place_id'],
+        photoRef = map['photos'][0]['photo_reference'];
 
   final String placeName;
   final LatLng location;
   final String placeIconURL;
   final String address;
   final String placeId;
+  final String photoRef;
 
   @override
   String toString() {
