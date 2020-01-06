@@ -21,7 +21,6 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
 
   @override
   void initState() {
-    _getDummyData();
     super.initState();
   }
 
@@ -31,18 +30,9 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
     super.dispose();
   }
 
-  void _getDummyData() {
-    final String jsonString = '{"html_attributions":[],"results":[{"formatted_address":"North Ave NW, Atlanta, GA 30332, United States","geometry":{"location":{"lat":33.7756178,"lng":-84.39628499999999},"viewport":{"northeast":{"lat":33.78656400000001,"lng":-84.37895280000001},"southwest":{"lat":33.76633560000001,"lng":-84.41260639999999}}},"icon":"https://maps.gstatic.com/mapfiles/place_api/icons/school-71.png","id":"1b84da9492645ad3413c4429ec4f70f7b7cbcb39","name":"Georgia Institute of Technology","opening_hours":{"open_now":false},"photos":[{"height":3024,"photo_reference":"CmRaAAAAgDkK25u2orZpEbBUq4XSvVWtmxKEbW34VLS8uJdaB0qwCXFluhfIIro8QUNjFVOvuGVFG_PkxraM6lrEHKKnW6chbEtY08uzZj25m8tJINqv6pXbdgYT1fJEP_-TjykMEhAvHsc8szFJFqPUalbRqmT8GhRadeDYuANtwFgH-8j9PDIHvnMl_g","width":4032}],"place_id":"ChIJ40_D64oE9YgRD8XYOj7QKrU","plus_code":{"compound_code":"QJG3+6F Atlanta, Georgia","global_code":"865QQJG3+6F"},"rating":4.5,"reference":"ChIJ40_D64oE9YgRD8XYOj7QKrU","user_ratings_total":535}],"status":"OK"}';
-    var jsonData = jsonDecode(jsonString);
-    jsonData = jsonData['results'] as List;
-    jsonData.forEach((item) {
-      _placeList.add(PlaceData.fromMap(item));
-    });
-  }
-
   void _onTextSubmitted(String text) async {
     Developer.log('Input: $text', name: 'pal_finder.emulator');
-    // try {
+    try {
       final response = await _networking.get(Uri.parse(_placeSearchURL + '?query=' + text));
       final jsonData = jsonDecode(response.body)['results'];
       print(response.body);
@@ -53,9 +43,9 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
       setState(() {
         Developer.log('Place Search Tab state reset.', name: 'pal_finder.emulator');
       });
-    // } catch (err) {
-    //   print(err);
-    // }
+    } catch (err) {
+      print(err);
+    }
   }
 
   Widget _createSearchBox() {
@@ -74,7 +64,7 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
     return Scaffold(
       body: DecoratedBox(
         decoration: BoxDecoration(
-          color: Color.fromRGBO(1, 1, 1, 0.0),
+          color: Colors.blue,
         ),
         child: SafeArea(
           bottom: false,

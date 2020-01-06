@@ -4,6 +4,7 @@ import 'package:pal_finder/screens/home.dart';
 import 'package:pal_finder/screens/login.dart';
 import 'package:pal_finder/screens/place_search.dart';
 import 'package:pal_finder/screens/event.dart';
+import 'package:pal_finder/screens/new_event.dart';
 
 void main() async {
   await DotEnv().load('.env');
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/home': (context) => HomeScreen(),
         '/place': (context) => PlaceSearchScreen(),
-        '/event_detail':(context) => EventScreen(),
+        '/event_detail': (context) => EventScreen(),
+        '/event_create': (context) => NewEventScreen(),
       },
     );
   }

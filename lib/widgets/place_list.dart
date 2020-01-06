@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pal_finder/widgets/place_card.dart';
 import 'package:pal_finder/data/place.dart';
 
@@ -21,7 +22,7 @@ class _PlaceListState extends State<PlaceList> {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: Color.fromRGBO(128, 128, 128, 1)),
+      decoration: BoxDecoration(color: Colors.white),
       child: ListView.builder(
         itemCount: widget.placeList.length,
         itemBuilder: (context, index) {

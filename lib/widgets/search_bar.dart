@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class SearchBar extends StatelessWidget {
@@ -14,44 +15,53 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(75, 0, 130, 1.0),
-        borderRadius: BorderRadius.circular(10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 4,
+        vertical: 8,
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 4,
-          vertical: 8,
-        ),
-        child: Row(
-          children: [
-            ExcludeSemantics(
-              child: Icon(
-                CupertinoIcons.search,
-                color: Color.fromRGBO(128, 128, 128, 1.0),
-              ),
+      child: Row(
+        children: [
+          ExcludeSemantics(
+            child: Icon(
+              Icons.search,
+              color: Colors.white,
             ),
-            Expanded(
-              child: CupertinoTextField(
-                controller: controller,
-                focusNode: focusNode,
-                cursorColor: Color.fromRGBO(10, 10, 10, 1.0),
-                onSubmitted: onTextSubmitted,
+          ),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Search',
+                contentPadding: EdgeInsets.only(
+                    left: 14.0, bottom: 8.0, top: 8.0),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: new BorderSide(color: Colors.white),
+                  borderRadius: new BorderRadius.circular(100),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: new BorderSide(color: Colors.white),
+                  borderRadius: new BorderRadius.circular(100),
+                ),
               ),
+              controller: controller,
+              focusNode: focusNode,
+              cursorColor: Colors.grey,
+              onSubmitted: onTextSubmitted,
             ),
-            GestureDetector(
-              onTap: () {
-                controller.clear();
-              },
-              child: Icon(
-                CupertinoIcons.clear_thick_circled,
-                semanticLabel: 'Clear search terms',
-                color: Color.fromRGBO(128, 128, 128, 1.0)
-              ),
+          ),
+          GestureDetector(
+            onTap: () {
+              controller.clear();
+            },
+            child: Icon(
+              Icons.clear,
+              semanticLabel: 'Clear search terms',
+              color: Colors.white,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
