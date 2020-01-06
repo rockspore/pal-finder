@@ -24,6 +24,8 @@ class UserData {
   final String lastName;
   final String profilePhotoUrl;
 
+  String get fullName => firstName + ' ' + lastName;
+
   @override
   String toString() {
     return username;

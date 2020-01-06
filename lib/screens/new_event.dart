@@ -25,22 +25,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
   @override
   Widget build(BuildContext context) {
     final PlaceData placeData = ModalRoute.of(context).settings.arguments;
-    // void _createNewEvent() async {
-    //   final String url = '${_networking.host}/apis/events/';
-    //   try {
-    //     print(placeData.placeId);
-    //     final response = await _networking.post(
-    //       url,
-    //       body: {
-    //         'place_id': placeData.placeId,
-    //         'time': _selectedDateTime.toIso8601String(),
-    //       },
-    //     );
-    //     print(response.statusCode());
-    //   } catch (err) {
-    //     print(err);
-    //   }
-    // }
     return Scaffold(
       body: Center(
         child: Container(
