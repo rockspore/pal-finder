@@ -22,7 +22,7 @@ class _EventListState extends State<EventList> {
     super.initState();
     Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-          _eventFetcher = EventFetcher(position.latitude, position.longitude, 10);
+          _eventFetcher = EventFetcher(position.latitude, position.longitude, 20);
           print(position.latitude);
           print(position.longitude);
           _loadFuture();

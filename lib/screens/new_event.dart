@@ -72,7 +72,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         });
                       },
                       currentTime: _selectedDateTime,
-                      locale: LocaleType.zh
+                      locale: LocaleType.en,
                     );
                   },
                   child: Text(

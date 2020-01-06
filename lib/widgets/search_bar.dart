@@ -20,48 +20,39 @@ class SearchBar extends StatelessWidget {
         horizontal: 4,
         vertical: 8,
       ),
-      child: Row(
-        children: [
-          ExcludeSemantics(
-            child: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
+      child: TextField(
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.grey,
           ),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Search',
-                contentPadding: EdgeInsets.only(
-                    left: 14.0, bottom: 8.0, top: 8.0),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.white),
-                  borderRadius: new BorderRadius.circular(100),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.white),
-                  borderRadius: new BorderRadius.circular(100),
-                ),
-              ),
-              controller: controller,
-              focusNode: focusNode,
-              cursorColor: Colors.grey,
-              onSubmitted: onTextSubmitted,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
+          suffixIcon: IconButton(
+            onPressed: () {
               controller.clear();
             },
-            child: Icon(
+            icon: Icon(
               Icons.clear,
-              semanticLabel: 'Clear search terms',
-              color: Colors.white,
+              color: Colors.grey,
             ),
           ),
-        ],
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'Search',
+          contentPadding: EdgeInsets.only(
+              left: 14.0, bottom: 14.0, top: 14.0),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
+        controller: controller,
+        focusNode: focusNode,
+        cursorColor: Colors.grey,
+        onSubmitted: onTextSubmitted,
       ),
     );
   }
