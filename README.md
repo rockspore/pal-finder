@@ -6,7 +6,7 @@
 **Invite** is here to help. Invite lets you invite a new friend to go to a restaurant with. Or you can also swipe through nearby invites to find great new places to go to with a host you like!
 
 ## Demo
-![demo](demo/invite_demo.gif)
+<img src='demo/invite_demo.gif' height=500>
 
 ## Backend
 This repo is the modile side of Invite, checkout the [backend](https://github.com/archelangelo/eventplus).
