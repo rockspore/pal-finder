@@ -15,31 +15,36 @@ class EventList extends StatefulWidget {
 class _EventListState extends State<EventList> {
   final _eventList = <EventData>[];
   EventFetcher _eventFetcher;
-  Future<bool> _future;
+  bool _isLoading;
+  bool _hasMore;
 
   @override
   void initState() {
     super.initState();
+    _isLoading = true;
+    _hasMore = true;
     Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
           _eventFetcher = EventFetcher(position.latitude, position.longitude, 20);
-          print(position.latitude);
-          print(position.longitude);
-          _loadFuture();
+          // print(position.latitude);
+          // print(position.longitude);
+          _loadEvents();
         });
   }
 
-  void _loadFuture() {
-    _future = _eventFetcher.fetchNextPage(context).then(
+  void _loadEvents() {
+    _isLoading = true;
+    _eventFetcher.fetchNextPage(context).then(
       (List<EventData> newEvents) {
+        _isLoading = false;
         if (newEvents.isEmpty) {
-          setState(() {});
-          return false;
+          setState(() {
+            _hasMore = false;
+          });
         } else {
           setState(() {
             _eventList.addAll(newEvents);
           });
-          return true;
         }
       },
     );
@@ -47,40 +52,30 @@ class _EventListState extends State<EventList> {
 
   @override
   Widget build(BuildContext context) {
-    // print('Building event list in $context');
-    return FutureBuilder<bool>(
-      future: _future,
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-        int listSize = _eventList.length;
-        if (!snapshot.hasData || snapshot.data) {
-          // print('snapshot.hasData: ${snapshot.hasData}');
-          // if (snapshot.hasData) {
-          //   print('snapshot.data: ${snapshot.data}');
-          // }
-          ++listSize;
-        }
-        return DecoratedBox(
-          decoration: BoxDecoration(color: Colors.white),
-          child: ListView.builder(
-            itemCount: listSize,
-            itemBuilder: (context, index) {
-              // print('called list builder inside $context with index $index');
-              if (index >= _eventList.length) {
-                if (snapshot.hasData) {
-                  _loadFuture();
-                }
-                return Container(
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: Text('Loading...'),
-                );
-              }
-              final event = _eventList[index];
-              return EventCard(event);
-            },
-          ),
-        );
-      },
+    int listSize = _eventList.length;
+    if (_hasMore) {
+      ++listSize;
+    }
+    return DecoratedBox(
+      decoration: BoxDecoration(color: Colors.white),
+      child: ListView.builder(
+        itemCount: listSize,
+        itemBuilder: (context, index) {
+          // print('called list builder inside $context with index $index');
+          if (index >= _eventList.length) {
+            if (!_isLoading) {
+              _loadEvents();
+            }
+            return Container(
+              alignment: Alignment.center,
+              color: Colors.white,
+              child: Text('Loading...'),
+            );
+          }
+          final event = _eventList[index];
+          return EventCard(event);
+        },
+      ),
     );
   }
 }
